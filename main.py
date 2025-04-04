@@ -138,7 +138,7 @@ def recommend_movie(movie_title):
 
 # 🎬 Enter Movie Name
 st.markdown("<h2 style='text-align: center;'>🎬 Enter a  Name:</h2>", unsafe_allow_html=True)
-movie_name = st.text_input("", placeholder="Type a movie name here...")
+movie_name = st.text_input("", placeholder="Type a name here...")
 
 # ✅ Display Movies (Auto-Displayed After Input)
 if movie_name:
