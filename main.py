@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
 
 # 🎬 Set Page Title & Icon
-st.set_page_config(page_title="Movies Recommendor", page_icon="🎥", layout="wide")
+st.set_page_config(page_title="Movies Finder", page_icon="🎥", layout="wide")
 
 # ✅ 50+ Fun Movie Quotes (Auto-Displayed)
 movie_quotes = [
@@ -75,7 +75,7 @@ movie_facts = [
 ]
 
 # ✅ Display Title, Random Movie Quote & Fact
-st.markdown("<h1 style='text-align: center; color: #FFD700;'>🎬 Movie Recommendor System</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #FFD700;'>🎬 Movie Finder System</h1>", unsafe_allow_html=True)
 st.markdown(f"<h3 style='text-align: center;'>{random.choice(movie_quotes)}</h3>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center; color: #FF5733;'>🎭 Fun Movie Fact:</h2>", unsafe_allow_html=True)
 st.markdown(f"""
@@ -108,7 +108,7 @@ def load_data():
 
 movies = load_data()
 
-# ✅ Movie Recommendation System
+# ✅ Movie Finder System
 @st.cache_data
 def compute_tfidf(data):
     vectorizer = TfidfVectorizer(stop_words="english", max_features=10000)
@@ -130,19 +130,19 @@ def recommend_movie(movie_title):
     similar_matches = [t for t in available_titles if movie_title in t]
     if not exact_match and not similar_matches:
         st.error(f"❌ Movie '{movie_title}' not found! Try another name.")
-        return ["No recommendations available."]
+        return ["Not available."]
     selected_title = exact_match[0] if exact_match else similar_matches[0]
     idx = movies[movies["title"] == selected_title].index[0]
     distances, indices = model_nn.kneighbors(tfidf_matrix[idx])
     return [movies.iloc[i]["title"].title() for i in indices[0][1:]]
 
 # 🎬 Enter Movie Name
-st.markdown("<h2 style='text-align: center;'>🎬 Enter a Movie Name:</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>🎬 Enter a  Name:</h2>", unsafe_allow_html=True)
 movie_name = st.text_input("", placeholder="Type a movie name here...")
 
-# ✅ Display Movie Recommendations (Auto-Displayed After Input)
+# ✅ Display Movies (Auto-Displayed After Input)
 if movie_name:
-    st.markdown("<h2 style='text-align: center;'>🔥 Recommended Movies:</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'>🔥Movies Found:</h2>", unsafe_allow_html=True)
     recommendations = recommend_movie(movie_name)
     for rec in recommendations:
         st.markdown(f"<h4 style='text-align: center; color: #FFD700;'>✅ {rec}</h4>", unsafe_allow_html=True)
